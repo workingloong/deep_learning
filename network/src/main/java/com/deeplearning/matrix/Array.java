@@ -69,10 +69,12 @@ public class Array{
 		return z;
 	}
 	
-	public void multiplyConstant(double num) {
+	public Array multiplyConstant(double num) {
+		double[] z = new double[nums.length];
 		for(int i = 0; i < nums.length; i++) {
-			nums[i] = nums[i] * num;
+			z[i] = nums[i] * num;
 		}
+		return new Array(z);
 	}
 	
 	public void print() {

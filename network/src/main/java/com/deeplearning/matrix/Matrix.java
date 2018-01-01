@@ -62,11 +62,14 @@ public class Matrix extends Array{
 		return new Array(z);
 	}
 	
-	@Override
-	public void multiplyConstant(double num) {
+	public Matrix multiplyConstant(double num) {
+		double[][] z = new double[arrays.length][arrays[0].size()];
 		for(int i = 0; i < arrays.length; i++) {
-			arrays[i].multiplyConstant(num);
+			for(int j = 0; j <arrays[0].size(); j++) {
+				z[i][j] = arrays[i].getElement(j) * num;
+			}
 		}
+		return new Matrix(z);
 	}
 	
 	public Matrix transposeMatrix(){

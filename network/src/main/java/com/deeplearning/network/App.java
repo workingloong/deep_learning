@@ -29,8 +29,8 @@ public class App
         String trainFile = "/Users/workingloong/workspace/neural_network/java_dl/data/trainingData.txt";
         File file = new File(trainFile);
         List<SampleData> trainData = readTxtFile(file);
-        int epoches = 30;
-        int miniBatchSize = 40;
+        int epoches = 10;
+        int miniBatchSize = 100;
         double eta = 0.5;
         double lambda = 0.2;
         network.SGD(trainData, epoches, miniBatchSize, eta, lambda);

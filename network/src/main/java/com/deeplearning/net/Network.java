@@ -93,22 +93,16 @@ public class Network {
 			backProp(x, y, nablaW, nablaB);
 		}
 		for(int i = 0; i < weights.size(); i++) {
-			weights.get(i).multiplyConstant(1 - eta * (lambda) / samplesNum);
-			nablaW[i].multiplyConstant(eta / data.size());
-			Matrix tempM = weights.get(i).minus(nablaW[i]);
+			Matrix tempW = weights.get(i).multiplyConstant(1 - eta * (lambda) / samplesNum);
+			Matrix tempNablaW = nablaW[i].multiplyConstant(eta / data.size());
+			tempW = tempW.minus(tempNablaW);
 			weights.remove(i);
-			weights.add(i, tempM);
-			nablaB[i].multiplyConstant(eta / data.size());
-			Array tempB = biases.get(i).minus(nablaB[i]);
+			weights.add(i, tempW);
+			Array tempNablaB = nablaB[i].multiplyConstant(eta / data.size());
+			Array tempB = biases.get(i).minus(tempNablaB);
 			biases.remove(i);
-			biases.add(i, tempB);
-			
+			biases.add(i, tempB);	
 		}
-		
-		//self.weights = [(1-eta*(lmbda/n))*w-(eta/len(mini_batch))*nw for w, nw in zip(self.weights, nabla_w)]
-		//self.biases = [b-(eta/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]
-		
-		
 	}
 	
 	public void backProp(Array x, Array y, Matrix[] nablaW, Array[] nablaB) {

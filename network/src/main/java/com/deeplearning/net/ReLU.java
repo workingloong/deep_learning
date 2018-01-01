@@ -16,8 +16,10 @@ public class ReLU implements ActivationFunction{
 	}
 	
 	public double derivative(double z) {
-		double a = fn(z);
-		return a * (1.0 -a);
+		if(z > 0) {
+			return 1.0;
+		}
+		return 0.0;
 	}
 	
 	public Array derivative(Array z) {
