@@ -15,14 +15,16 @@ public class Network {
 	private List<Matrix> weights;
 	private List<Array> biases;
 	private ActivationFunction activate;
+	private ActivationFunction outputFn;
 	
 	public Network() {}
 	
-	public Network(Array sizes, CostOperator cost, ActivationFunction activate) {
+	public Network(Array sizes, CostOperator cost, ActivationFunction activate, ActivationFunction outputFn) {
 		this.layerNum = sizes.size();
 		this.sizes = sizes;
 		this.cost = cost;
 		this.activate = activate;
+		this.outputFn = outputFn;
 		weights = new ArrayList<Matrix>();
 		biases = new ArrayList<Array>();
 		weightInitialize(false);
@@ -115,12 +117,12 @@ public class Network {
 		for(int i = 0; i < weights.size(); i++) {
 			Array z = weights.get(i).multiplyArray(activation).add(biases.get(i));
 			zs.add(z);
-			activation = activate.fn(z);
+			activation = outputFn.fn(z);
 			activations.add(activation);
 		}
 		Array output = activations.get(activations.size() - 1);
 		Array outZ = zs.get(zs.size()-1);
-		Array deltaSigma = cost.derivative(output, y).dotMultiply(activate.derivative(outZ));
+		Array deltaSigma = cost.derivative(output, y).dotMultiply(outputFn.derivative(outZ));
 		deltaNablaB.add(deltaSigma);
 		Matrix tempDeltaW = calDeltaW(deltaSigma, activations.get(activations.size() - 2));
 		deltaNablaW.add(tempDeltaW);

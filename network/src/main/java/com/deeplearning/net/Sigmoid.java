@@ -20,7 +20,7 @@ public class Sigmoid implements ActivationFunction{
 	}
 	
 	public Array derivative(Array z) {
-		double[] d = new dsouble[z.size()];
+		double[] d = new double[z.size()];
 		for(int i = 0; i < z.size(); i++) {
 			double tempZ = z.getElement(i);
 			d[i] = derivative(tempZ);
